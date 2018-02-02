@@ -3,7 +3,8 @@ from django.http import HttpResponse
 
 # Create your views here.
 def post_create(request):
-    return HttpResponse("<h1>create</h1>")
+    return render(request, "index.html", {})
+    #return HttpResponse("<h1>create</h1>")
 def post_detail(request):
     return HttpResponse("<h1>detail</h1>")
 def post_list(request):
