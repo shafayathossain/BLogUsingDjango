@@ -2,7 +2,8 @@
     <body>
         <h1>{{title}} working</h1>
         {% for obj in object_list %}
-        <h4>{{obj.title}}</h4>
+        
+        <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
         <p>{{obj.content}}</p>
         <p>{{obj.timestamp}}</p>
         <p>{{obj.id}}</p>
