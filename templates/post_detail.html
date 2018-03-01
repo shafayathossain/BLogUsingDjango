@@ -1,8 +1,8 @@
-<html>
-    <body>
-        <h1>{{title}} working</h1>
-        <h4>{{obj.title}}</h4>
-        <p>{{obj.content}}</p>
-        <p>{{obj.timestamp}}</p>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+{{block.super}}
+    <h1>{{title}} working</h1>
+    <h4>{{obj.title}}</h4>
+    <p>{{obj.content}}</p>
+    <p>{{obj.timestamp}}</p>
+{% endblock content %}

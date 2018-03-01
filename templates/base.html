@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <div class='container'>
+            {% block content %}
+                <h1>{{title}} working</h1>
+                {% for obj in object_list %}
+                
+                    <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
+                    <p>{{obj.content}}</p>
+                    <p>{{obj.timestamp}}</p>
+                    <p>{{obj.id}}</p>
+                {% endfor %}
+            {% endblock content %}
+        </div>
+        
+    </body>
+</html>
