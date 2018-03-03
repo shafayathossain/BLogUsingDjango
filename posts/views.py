@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from .models import Post
 from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,8 +7,12 @@ from django.shortcuts import render
 
 # Create your views here.
 def post_create(request):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
+        instance.user = request.user
         instance = form.save(commit=False)
         instance.save()
         return HttpResponseRedirect(instance.get_absolute_url())
@@ -41,6 +45,8 @@ def post_list(request):
         }
     return render(request, "post_list.html", context)
 def post_update(request, id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     instance = get_object_or_404(Post, id = id)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
@@ -52,6 +58,8 @@ def post_update(request, id):
     }
     return render(request, "post_form.html", context)
 def post_delete(request, id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     instance = get_object_or_404(Post, id=id)
     instance.delete()
     return redirect("posts:list")
