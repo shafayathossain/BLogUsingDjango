@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from .models import Post
+from django.db.models import Q
 from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
@@ -31,6 +32,11 @@ def post_detail(request, id):
     return render(request, "post_detail.html", context)
 def post_list(request):
     queryset = Post.objects.all()
+    query = request.GET.get('q')
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query))
     paginator = Paginator(queryset, 1)
     page = request.GET.get('page')
     try:
